@@ -22,6 +22,7 @@ import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Xml;
 import android.view.Display;
 import android.view.WindowManager;
@@ -183,38 +184,64 @@ public class InvariantDeviceProfile {
 
     ArrayList<InvariantDeviceProfile> getPredefinedDeviceProfiles(Context context) {
         ArrayList<InvariantDeviceProfile> profiles = new ArrayList<>();
-        try (XmlResourceParser parser = context.getResources().getXml(R.xml.device_profiles)) {
-            final int depth = parser.getDepth();
-            int type;
+//        try (XmlResourceParser parser = context.getResources().getXml(R.xml.device_profiles)) {
+//            final int depth = parser.getDepth();
+//            int type;
+//            while (((type = parser.next()) != XmlPullParser.END_TAG ||
+//                    parser.getDepth() > depth) && type != XmlPullParser.END_DOCUMENT) {
+//                if ((type == XmlPullParser.START_TAG) && "profile".equals(parser.getName())) {
+//                    TypedArray a = context.obtainStyledAttributes(
+//                            Xml.asAttributeSet(parser), R.styleable.InvariantDeviceProfile);
+//                    int numRows = a.getInt(R.styleable.InvariantDeviceProfile_numRows, 0);
+//                    int numColumns = a.getInt(R.styleable.InvariantDeviceProfile_numColumns, 0);
+//                    float iconSize = a.getFloat(R.styleable.InvariantDeviceProfile_iconSize, 0);
+//                    profiles.add(new InvariantDeviceProfile(
+//                            a.getString(R.styleable.InvariantDeviceProfile_name),
+//                            a.getFloat(R.styleable.InvariantDeviceProfile_minWidthDps, 0),
+//                            a.getFloat(R.styleable.InvariantDeviceProfile_minHeightDps, 0),
+//                            numRows,
+//                            numColumns,
+//                            a.getInt(R.styleable.InvariantDeviceProfile_numFolderRows, numRows),
+//                            a.getInt(R.styleable.InvariantDeviceProfile_numFolderColumns, numColumns),
+//                            a.getInt(R.styleable.InvariantDeviceProfile_minAllAppsPredictionColumns, numColumns),
+//                            iconSize,
+//                            a.getFloat(R.styleable.InvariantDeviceProfile_iconTextSize, 0),
+//                            a.getInt(R.styleable.InvariantDeviceProfile_numHotseatIcons, numColumns),
+//                            a.getFloat(R.styleable.InvariantDeviceProfile_hotseatIconSize, iconSize),
+//                            a.getResourceId(R.styleable.InvariantDeviceProfile_defaultLayoutId, 0)));
+//                    a.recycle();
+//                }
+//            }
+//        } catch (IOException|XmlPullParserException e) {
+//            throw new RuntimeException(e);
+//        }
 
-            while (((type = parser.next()) != XmlPullParser.END_TAG ||
-                    parser.getDepth() > depth) && type != XmlPullParser.END_DOCUMENT) {
-                if ((type == XmlPullParser.START_TAG) && "profile".equals(parser.getName())) {
-                    TypedArray a = context.obtainStyledAttributes(
-                            Xml.asAttributeSet(parser), R.styleable.InvariantDeviceProfile);
-                    int numRows = a.getInt(R.styleable.InvariantDeviceProfile_numRows, 0);
-                    int numColumns = a.getInt(R.styleable.InvariantDeviceProfile_numColumns, 0);
-                    float iconSize = a.getFloat(R.styleable.InvariantDeviceProfile_iconSize, 0);
-                    profiles.add(new InvariantDeviceProfile(
-                            a.getString(R.styleable.InvariantDeviceProfile_name),
-                            a.getFloat(R.styleable.InvariantDeviceProfile_minWidthDps, 0),
-                            a.getFloat(R.styleable.InvariantDeviceProfile_minHeightDps, 0),
-                            numRows,
-                            numColumns,
-                            a.getInt(R.styleable.InvariantDeviceProfile_numFolderRows, numRows),
-                            a.getInt(R.styleable.InvariantDeviceProfile_numFolderColumns, numColumns),
-                            a.getInt(R.styleable.InvariantDeviceProfile_minAllAppsPredictionColumns, numColumns),
-                            iconSize,
-                            a.getFloat(R.styleable.InvariantDeviceProfile_iconTextSize, 0),
-                            a.getInt(R.styleable.InvariantDeviceProfile_numHotseatIcons, numColumns),
-                            a.getFloat(R.styleable.InvariantDeviceProfile_hotseatIconSize, iconSize),
-                            a.getResourceId(R.styleable.InvariantDeviceProfile_defaultLayoutId, 0)));
-                    a.recycle();
-                }
-            }
-        } catch (IOException|XmlPullParserException e) {
-            throw new RuntimeException(e);
-        }
+        //chengkai++
+        profiles.add(new InvariantDeviceProfile("Super Short Stubby",
+                255, 300,     2, 3, 2, 3, 3, 48, 13, 3, 48, R.xml.default_workspace_3x3));
+        profiles.add(new InvariantDeviceProfile("Shorter Stubby",
+                255, 400,     3, 3, 3, 3, 3, 48, 13, 3, 48, R.xml.default_workspace_3x3));
+        profiles.add(new InvariantDeviceProfile("Short Stubby",
+                275, 420,     3, 4, 3, 4, 4, 48, 13, 5, 48, R.xml.default_workspace_4x4));
+        profiles.add(new InvariantDeviceProfile("Stubby",
+                255, 450,     3, 4, 3, 4, 4, 48, 13, 5, 48, R.xml.default_workspace_4x4));
+        profiles.add(new InvariantDeviceProfile("Nexus S",
+                296, 491.33f, 4, 4, 4, 4, 4, 48, 13, 5, 48, R.xml.default_workspace_4x4));
+        profiles.add(new InvariantDeviceProfile("Nexus 4",
+                359, 567,     4, 4, 4, 4, 4, DEFAULT_ICON_SIZE_DP, 13, 5, 56, R.xml.default_workspace_4x4));
+        profiles.add(new InvariantDeviceProfile("Nexus 5",
+                335, 567,     5, 4, 5, 4, 4, DEFAULT_ICON_SIZE_DP, 13, 5, 56, R.xml.default_workspace_5x5));
+        profiles.add(new InvariantDeviceProfile("Large Phone",
+                406, 694,     5, 5, 4, 4, 4, 64, 14.4f,  5, 56, R.xml.default_workspace_5x5));
+        // The tablet profile is odd in that the landscape orientation
+        // also includes the nav bar on the side
+        profiles.add(new InvariantDeviceProfile("Nexus 7",
+                575, 904,     5, 6, 4, 5, 4, 72, 14.4f,  7, 60, R.xml.default_workspace_5x6));
+        // Larger tablet profiles always have system bars on the top & bottom
+        profiles.add(new InvariantDeviceProfile("Nexus 10",
+                727, 1207,    5, 6, 4, 5, 4, 76, 14.4f,  7, 76, R.xml.default_workspace_5x6));
+        profiles.add(new InvariantDeviceProfile("20-inch Tablet",
+                1527, 2527,   7, 7, 6, 6, 4, 100, 20,  7, 72, R.xml.default_workspace_5x6));
         return profiles;
     }
 
